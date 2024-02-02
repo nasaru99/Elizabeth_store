@@ -1,0 +1,18 @@
+<!-- store/templates/store/index.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Bienvenido a Elizabeth Store</h1>
+    <div>
+        <!-- Mostrar productos -->
+        {% for producto in productos %}
+            <div>
+                <h2>{{ producto.nombre }}</h2>
+                <p>{{ producto.descripcion }}</p>
+                <p>Precio: {{ producto.precio }}</p>
+                <!-- Añadir más detalles según sea necesario -->
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}

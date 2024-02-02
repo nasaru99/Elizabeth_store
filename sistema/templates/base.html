@@ -1,0 +1,68 @@
+<!-- store/templates/store/base.html -->
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elizabeth Store</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9; /* Color de fondo claro */
+        }
+        header {
+            background-color: #cdb4db; /* Color morado */
+            padding: 10px 0;
+            text-align: center;
+        }
+        header img {
+            height: 100px; /* Ajusta esto según el tamaño de tu logo */
+        }
+        nav {
+            background-color: #ffc8dd; /* Color rosa claro */
+            padding: 8px 0;
+            text-align: center;
+        }
+        nav a {
+            color: #333;
+            text-decoration: none;
+            padding: 0 15px;
+            font-weight: bold;
+        }
+        footer {
+            background-color: #bde0fe; /* Color azul claro */
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+        .content {
+            min-height: 80vh; /* Ajusta la altura del contenido */
+            padding: 20px;
+            background-color: #a2d2ff; /* Color azul más fuerte */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="{% static 'images/logo.jpeg' %}" alt="Logo">
+    </header>
+    <nav>
+        <!-- Enlaces de navegación -->
+        <a href="{% url 'index' %}">Inicio</a>
+        <!-- Agrega más enlaces según sea necesario -->
+    </nav>
+    <div class="content">
+        {% block content %}
+        {% endblock content %}
+    </div>
+    <footer>
+        © 2024 Elizabeth Store. Todos los derechos reservados.
+    </footer>
+</body>
+</html>
