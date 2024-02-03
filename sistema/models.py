@@ -1,9 +1,46 @@
 from django.db import models
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+#from django.utils import timezone
+# class UsuarioManager(BaseUserManager):
+#     def create_user(self, correo, password, **extra_fields):
+#         if not correo:
+#             raise ValueError('El correo es obligatorio')
+#         usuario = self.model(correo=self.normalize_email(correo), **extra_fields)
+#         usuario.set_password(password)
+#         usuario.save(using=self._db)
+#         return usuario
+
+#     def create_superuser(self, correo, password, **extra_fields):
+#         extra_fields.setdefault('is_staff', True)
+#         extra_fields.setdefault('is_superuser', True)
+
+#         if extra_fields.get('is_staff') is not True:
+#             raise ValueError('Superuser must have is_staff=True.')
+#         if extra_fields.get('is_superuser') is not True:
+#             raise ValueError('Superuser must have is_superuser=True.')
+
+#         return self.create_user(correo, password, **extra_fields)
 
 class Rol(models.Model):
     nombre = models.CharField(max_length=255)
 
+# class Usuario(AbstractBaseUser, PermissionsMixin):
+#     nombre_usuario = models.CharField(max_length=255, null=True)
+#     password = models.CharField(max_length=255, )
+#     correo = models.EmailField(unique=True)
+#     rol = models.ForeignKey(Rol, on_delete=models.CASCADE, null=True, blank=True)
+#     is_staff = models.BooleanField(default=False)  # Agregado
+#     is_active = models.BooleanField(default=True)  # Agregado
+#     date_joined = models.DateTimeField(default=timezone.now)  # Agregado
+
+#     objects = UsuarioManager()
+
+#     USERNAME_FIELD = 'correo'
+#     REQUIRED_FIELDS = ['nombre_usuario']
+
+#     def __str__(self):
+#         return self.correo
+    
 class Usuario(models.Model):
     nombre_usuario = models.CharField(max_length=255)
     contraseña = models.CharField(max_length=255)
@@ -11,19 +48,39 @@ class Usuario(models.Model):
     rol = models.ForeignKey(Rol, on_delete=models.CASCADE)
 
 class Categoria(models.Model):
+    GENEROS = [
+        ('M', 'Masculino'),
+        ('F', 'Femenino'),
+        ('U', 'Unisex'),
+        ('N', 'No Especificado'),  # Opcional, dependiendo de tus necesidades
+    ]
+
     nombre = models.CharField(max_length=255)
+    genero = models.CharField(max_length=1, choices=GENEROS, default='N')  # Añade el campo genero
 
 class Proveedor(models.Model):
     nombre = models.CharField(max_length=255)
     telefono = models.IntegerField()
     descripcion = models.TextField()
 
+class Talla(models.Model):
+    nombre = models.CharField(max_length=10)  # Longitud ajustada para nombres de talla más largos
+    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, related_name='tallas')
+
+    def __str__(self):
+        return self.nombre
+
+
 class Producto(models.Model):
     nombre = models.CharField(max_length=255)
     existencia = models.IntegerField()
     precio = models.IntegerField()
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
+    talla = models.ForeignKey(Talla, on_delete=models.CASCADE, related_name='productos')
     proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.nombre
 
 class ImagenProducto(models.Model):
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)

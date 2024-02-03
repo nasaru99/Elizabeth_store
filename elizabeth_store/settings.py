@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'elizabeth_store.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'elizabeth_store',  # Nombre de tu base de datos
+        'NAME': 'elizabeth_store_2',  # Nombre de tu base de datos
         'USER': 'root2',  # Usuario predeterminado de XAMPP
         'PASSWORD': 'root2',  # Por defecto, XAMPP no tiene contraseña
         'HOST': 'localhost',  # O '127.0.0.1'
@@ -127,3 +127,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# AUTH_USER_MODEL = 'sistema.Usuario' 
